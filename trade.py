@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
 
 
 
@@ -59,19 +55,18 @@ while True:
         for i in range(1):
             interest.append('KRW-' + list(ticker_temp[i])[0][1:-5])
             coin=interest[0].lstrip('KRW-')
-            coin_l=[coin]
             
         if start_time < now < end_time - datetime.timedelta(seconds=10):
-            target_price = get_target_price(interest, 0.5)
-            current_price = get_current_price(interest)
+            target_price = get_target_price(interest[0], 0.5)
+            current_price = get_current_price(interest[0])
             if target_price < current_price:
                 krw = get_balance("KRW")
                 if krw > 5000:
-                    upbit.buy_market_order(interest, krw*0.9995)
+                    upbit.buy_market_order(interest[0], krw*0.9995)
         else:
-            btc = get_balance(coin_l)
+            btc = get_balance(coin)
             if btc > 0.00008:
-                upbit.sell_market_order(interest, btc*0.9995)
+                upbit.sell_market_order(interest[0], btc*0.9995)
         time.sleep(1)
     except Exception as e:
         print(e)
