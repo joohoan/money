@@ -55,9 +55,9 @@ while True:
         interest = []
         ticker_temp = bs.find_all("a", attrs={"rel":"nofollow noopener", "class":"mr-1"})
         
-        for i in range(2):
+        for i in range(5):
             interest.append('KRW-' + list(ticker_temp[i])[0][1:-5])
-            coin=interest[i].lstrip('KRW-')
+            coin=interest[1].lstrip('KRW-')
         if start_time < now < end_time - datetime.timedelta(minutes=50):
             target_price = get_target_price(interest[1], 0.5)
             current_price = get_current_price(interest[1])
