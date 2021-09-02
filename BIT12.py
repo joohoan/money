@@ -7,11 +7,13 @@ secret = "lEL5u7uMedUNGSmrX1Txu8gfZ3876KrhiYSo8YkP"
 
 def get_target_price(ticker, k):
     df = pyupbit.get_ohlcv(ticker, interval="minute240", count=6)
+    df.index=df.index.strftime('%H:%M')
     target_price = df.loc['21:00']['close']+(df.loc['21:00']['high']- df.loc['21:00']['low']) * k
     return target_price
 
 def get_target_price_12(ticker, k):
     df = pyupbit.get_ohlcv(ticker, interval="minute240", count=6)
+    df.index=df.index.strftime('%H:%M')
     target_price = df.loc['09:00']['close']+(df.loc['09:00']['high']- df.loc['09:00']['low']) * k
     return target_price
 
