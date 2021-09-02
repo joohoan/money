@@ -6,12 +6,12 @@ access = "mqE7HSDocW3t6WbxrCS8ybGeaOxHOL9Aw2PXJsKX"
 secret = "lEL5u7uMedUNGSmrX1Txu8gfZ3876KrhiYSo8YkP"
 
 def get_target_price(ticker, k):
-    df = pyupbit.get_ohlcv(ticker, interval="minute60", count=2)
+    df = pyupbit.get_ohlcv(ticker, interval="day", count=2)
     target_price = df.iloc[0]['close'] + (df.iloc[0]['high'] - df.iloc[0]['low']) * k
     return target_price
 
 def get_start_time(ticker):
-    df = pyupbit.get_ohlcv(ticker, interval="minute60", count=1)
+    df = pyupbit.get_ohlcv(ticker, interval="day", count=1)
     start_time = df.index[0]
     return start_time
 
@@ -35,7 +35,7 @@ while True:
     try:
         now = datetime.datetime.now()
         start_time = get_start_time("KRW-ADA")
-        end_time = start_time + datetime.timedelta(hours=1)
+        end_time = start_time + datetime.timedelta(days=1)
 
         if start_time < now < end_time - datetime.timedelta(seconds=10):
             target_price = get_target_price("KRW-ADA", 0.5)
