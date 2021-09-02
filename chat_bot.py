@@ -1,19 +1,36 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import pyupbit 
 
-
+def get_start_time(ticker):
+    df = pyupbit.get_ohlcv(ticker, interval="day", count=1)
+    start_time = df.index[0]
+    return start_time
 
 def get_target_price(ticker, k):
-    df = pyupbit.get_ohlcv(ticker, interval="minute720", count=2)
-    target_price = df.iloc[0]['close'] + (df.iloc[0]['high'] - df.iloc[0]['low']) * k
+    df = pyupbit.get_ohlcv(ticker, interval="minute240", count=6)
+    df.index.strftime('%H:%M')
+    df.index=df.index.strftime('%H:%M')
+    target_price = df.loc['21:00']['close']+(df.loc['21:00']['high']- df.loc['21:00']['low']) * k
     return target_price
 
-target_price = get_target_price("KRW-BTC", 0.5)
+def get_target_price_12(ticker, k):
+    df = pyupbit.get_ohlcv(ticker, interval="minute240", count=6)
+    df.index.strftime('%H:%M')
+    df.index=df.index.strftime('%H:%M')
+    target_price = df.loc['09:00']['close']+(df.loc['09:00']['high']- df.loc['09:00']['low']) * k
+    return target_price
+
+while True:
+    try:
+        now = datetime.datetime.now()
+        start_time = get_start_time("KRW-BTC")
+        end_time = start_time + datetime.timedelta(days=1)
+
+        if start_time < now < end_time - datetime.timedelta(seconds=43210): # now가 오전 09시 ~ 저녁 08:59:50 사이
+            target_price = get_target_price_12("KRW-BTC", 0.5)
+                    
+        elif start_time + datetime.timedelta(seconds=43200) < now < endtime - datetime.timedelta(seconds=10) : # now가 저녁 9시 ~ 아침 08:59:50 사이
+            target_price = get_target_price("KRW-BTC", 0.5)
+
 
 tp = target_price.astype(int)
 tp = format(tp,',d')
@@ -49,10 +66,5 @@ add_handler('send', send_message)
  
 updater.start_polling()
 updater.idle()
-
-
-# In[ ]:
-
-
 
 
