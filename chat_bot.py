@@ -1,6 +1,6 @@
 import pyupbit 
 
-df = pyupbit.get_ohlcv(ticker, interval="day", count=2)
+df = pyupbit.get_ohlcv("KRW-BTC", interval="day", count=2)
 target_price = df.iloc[0]['close'] + (df.iloc[0]['high'] - df.iloc[0]['low']) * k
 
 
