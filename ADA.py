@@ -45,7 +45,7 @@ while True:
                 if krw > 5000:
                     upbit.buy_market_order("KRW-ADA", krw*0.9995)
         else:
-            btc = get_balance("BTC")
+            btc = get_balance("ADA")
             if btc > 0.00008:
                 upbit.sell_market_order("KRW-ADA", btc*0.9995)
         time.sleep(1)
