@@ -7,11 +7,11 @@ from telegram.ext import CommandHandler
 telegram_token = '1970363842:AAF8GOVw97fAMNjkf5BqvRkxg1Wbx0eUIds'
 telegram_chat_id = 696530999
 
-        def send_message(update, context):
-            bot.sendMessage(chat_id = telegram_chat_id, text = tg)
+def send_message(update, context):
+    bot.sendMessage(chat_id = telegram_chat_id, text = tg)
  
-        def add_handler(cmd, func):
-            updater.dispatcher.add_handler(CommandHandler(cmd, func))
+def add_handler(cmd, func):
+    updater.dispatcher.add_handler(CommandHandler(cmd, func))
             
 while True:
     try:
