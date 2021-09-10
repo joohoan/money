@@ -35,7 +35,7 @@ def get_current_price(ticker):
 
 upbit = pyupbit.Upbit(access, secret)
 print("autotrade start")
-
+interest=pyupbit.get_tickers(fiat="KRW")
 
 while True:
     try:
@@ -43,13 +43,6 @@ while True:
         start_time = get_start_time("KRW-BTC")
         end_time = start_time + datetime.timedelta(days=1)
 
-        url = "https://coinmarketcap.com/ko/exchanges/upbit/"
-        bs = BeautifulSoup(requests.get(url).text,'html.parser')
-        interest = []
-        ticker_temp = bs.find_all("a", attrs={"rel":"noopener nofollow noreferrer", "class":"sc-130rhjl-0 kLuYhf cmc-link"})        
-
-        for i in range(20):
-            interest.append('KRW-' + list(ticker_temp[i])[0][:-4])
         if start_time < now < end_time - datetime.timedelta(seconds=60):
             for i in range(20) :
                 target_price = get_target_price(interest[i], 0.5)
@@ -61,11 +54,9 @@ while True:
                     if krw > 5000:
                         upbit.buy_market_order(interest[i], krw*0.9995)
         else:
-            for i in range(20):
-                interest.append('KRW-' + list(ticker_temp[i])[0][:-4])
-                btc = upbit.get_balance(interest[i])
-                if btc > 0.00008:
-                    upbit.sell_market_order(interest[i], btc*0.9995)
+            btc = upbit.get_balance(interest[i])
+            if btc > 0.00008:
+                upbit.sell_market_order(interest[i], btc*0.9995)
         time.sleep(1)
     except Exception as e:
         print(e)
