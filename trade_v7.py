@@ -52,7 +52,7 @@ while True:
                 target_price = get_target_price(interest[i], 0.5)
                 current_price = get_current_price(interest[i])
                 upper_price = target_price * 1.01
-                lower_price = target_price * 0.97
+                lower_price = target_price * 0.98
                 print(interest[i])
                 print(target_price)
                 print(current_price)
